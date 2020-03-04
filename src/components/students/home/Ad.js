@@ -7,7 +7,8 @@ import {
   View,
   Text,
   Animated,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from 'react-native';
 
 import { Image, Card } from 'react-native-elements';
@@ -24,7 +25,6 @@ const Ad = (props) => {
     <>
       <ScrollView
           horizontal={true}
-          pagingEnabled={true} // animates ScrollView to nearest multiple of it's own width
           showsHorizontalScrollIndicator={false}
           // the onScroll prop will pass a nativeEvent object to a function
           onScroll={Animated.event( // Animated.event returns a function that takes an array where the first element...
@@ -46,7 +46,8 @@ const Ad = (props) => {
                          borderColor: '#dddddd', overflow: 'hidden'}}>
                        <Image
                         style={{height: 90, width: width*0.8}}
-                        source={{uri: ad.image}}/>
+                        source={{uri: ad.image}}
+                        PlaceholderContent={<ActivityIndicator />}/>
                      </TouchableOpacity>
                       <Text style={{alignSelf: 'center'}}>{ad.title}</Text>
                    </View>                    

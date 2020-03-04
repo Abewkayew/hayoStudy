@@ -17,13 +17,16 @@ import UserAvatar from '../UserAvatar';
 import UserInput from './UserInput';
 
 const WriteComment = (props) => {
-  const fullName = "Milkias Tonji"
-  const avatarSize = "small";
+  const {fullName, avatarSize, showAvatar} = props;
   return (
     <>
-      <View style={styles.container}>
-          <UserAvatar fullName={fullName} avatarSize={avatarSize}/>
-          <UserInput/>
+      <View style={[styles.container, {flexDirection: showAvatar ? 'row' : 'column'}]}>
+          {
+            showAvatar && (
+              <UserAvatar fullName={fullName} avatarSize={avatarSize}/>
+            )
+          }
+          <UserInput placeHolder='Write a comment...' height={70}/>
       </View>
     </>    
   );
@@ -31,7 +34,6 @@ const WriteComment = (props) => {
 
 const styles = StyleSheet.create({    
     container: {
-        flexDirection: 'row',
         marginVertical: 10
     },
     styleTytle: {

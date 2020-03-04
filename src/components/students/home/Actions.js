@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {TouchableHighlight, TouchableOpacity} from 'react-native-gesture-handler';
 import WriteComment from './comment/WriteComment';
 
-class Actions extends React.Component{
+class Actions extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -29,6 +29,7 @@ class Actions extends React.Component{
 
   render(){
     const {showCommentInput} = this.state;
+    const {fullName, avatarSize, showAvatar} = this.props;
     return (
       <>
        <View style={styles.container}>
@@ -74,11 +75,11 @@ class Actions extends React.Component{
   
            </TouchableOpacity>
            </View>
-           {
-              showCommentInput ? (
-                  <WriteComment/>
-              ): (null)
-           }
+            {
+              showCommentInput && (
+                  <WriteComment {...this.props}/>
+              )
+            }
       </>
     );
   }
@@ -98,7 +99,8 @@ const styles = StyleSheet.create({
       fontSize: 15,
       textShadowColor: '#808080',
       textShadowRadius: 2,
-      marginLeft: 3
+      marginLeft: 3,
+      color: '#808080'
     }
 });
 

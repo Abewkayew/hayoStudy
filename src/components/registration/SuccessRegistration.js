@@ -17,7 +17,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { withNavigation } from 'react-navigation';
 
 import LottieView from 'lottie-react-native';
-
+import CommonButton from '../common/CommonButton.js';
+import TitleHeader from '../common/TitleHeader.js';
 
 class SuccessRegistration extends React.Component {
   constructor(props){
@@ -37,16 +38,34 @@ class SuccessRegistration extends React.Component {
 
 
   render(){
+    const { prevStep, handleChange, navigation} = this.props
+
     return (
         <>
-        <Text style={[styles.textStyle, {fontWeight: '700', marginVertical: 30}]}>You are all set</Text>
-          <View style={styles.container}>    
+        <Text style={[styles.textStyle,
+          {fontWeight: '700', marginVertical: 15, fontSize: 20, alignSelf: 'center' }]}>
+            You are all set
+          </Text>
+          <Text
+           style={{alignSelf: 'center', fontSize: 20, color: '#808080'}}>
+             HayoStudy: A journey to excellence
+           </Text>
+          <View style={styles.container}>
             <LottieView source={require('../../utils/json_data/done-button.json')}
                 progress={this.state.progress} />            
-          </View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home') } style={styles.buttonStyle}>
-                <Text style={styles.textStyle}>Finish</Text>
+          </View>          
+          <View style={styles.containButtons}>
+            <TouchableOpacity 
+              onPress={prevStep}
+              style={styles.buttonStyle}>
+                  <Text style={styles.textStyle}>Back</Text>
             </TouchableOpacity>
+            <TouchableOpacity 
+                onPress={() => navigation.navigate('Header')}
+                style={styles.buttonStyle}>
+                    <Text style={styles.textStyle}>Finish</Text>
+            </TouchableOpacity>
+          </View>
             
         </>
       );
@@ -59,27 +78,9 @@ const styles = StyleSheet.create({
         flex: .9,
         justifyContent: 'center',
         flexDirection: 'column',
-        marginHorizontal: 20
      },
-     textStyle: {
-      textAlign: 'center',
-      fontSize: 20,
-      paddingVertical: 12,
-    },
     bottomNav: {
       marginTop: 80
-    },
-    buttonStyle: {
-      justifyContent: 'center',
-      borderRadius: 15,
-      borderWidth: 1,
-      borderColor: '#1c396d',
-      marginVertical: 20,
-      marginHorizontal: 20
-    },
-    styleInsideButtonText: {
-        color: '#fff',
-        fontSize: 18,
     },
     inputStyle: {
       alignSelf: 'stretch',
@@ -90,7 +91,27 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       marginHorizontal: 10,
       marginBottom: 20,
-    }
+    },
+    textStyle: {
+       fontSize: 20,
+       fontWeight: '500',
+       alignSelf: 'center',
+       marginVertical: 10
+   },
+   containButtons: {
+      flexDirection: 'row', 
+      justifyContent: 'center'
+   },
+   buttonStyle: {
+     justifyContent: 'center',
+     borderRadius: 15,
+     borderBottomWidth: 1,
+     borderWidth: .8,
+     borderColor: '#808080',
+     marginHorizontal: 20,
+     paddingHorizontal: 30,
+     marginBottom: 40,
+   }
 });
 
 export default withNavigation(SuccessRegistration);

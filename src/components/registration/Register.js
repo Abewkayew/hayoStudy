@@ -28,9 +28,9 @@ class Register  extends React.Component{
     }
   }
 
-  navigateToNextPage(){
+  navigateToNextPage(pageName){
     setTimeout(() => {
-      this.props.navigation.navigate('RegisterForm')
+      this.props.navigation.navigate(pageName)
     }, 1000)
   }
 
@@ -45,7 +45,7 @@ class Register  extends React.Component{
         selectedParent: false,
         showNextButton: !this.state.showNextButton
       })
-      this.navigateToNextPage()
+      this.navigateToNextPage('RegisterForm')
 
     }else if(selectedUser === 'teacher'){
       this.setState({
@@ -55,7 +55,7 @@ class Register  extends React.Component{
         selectedParent: false,
         showNextButton: !this.state.showNextButton
       })
-      this.navigateToNextPage()
+      this.navigateToNextPage('TeacherRegistration')
 
     }else if(selectedUser === 'tutor'){
       this.setState({
@@ -65,7 +65,7 @@ class Register  extends React.Component{
         selectedParent: false,
         showNextButton: !this.state.showNextButton
       })
-      this.navigateToNextPage()
+      this.navigateToNextPage('RegisterForm')
 
     }else if(selectedUser === 'parent'){
       this.setState({
@@ -75,7 +75,7 @@ class Register  extends React.Component{
         selectedParent: !this.state.selectedParent,
         showNextButton: !this.state.showNextButton
       })
-      this.navigateToNextPage()      
+      this.navigateToNextPage('ParentRegistration')      
     }
 
   }
@@ -84,9 +84,9 @@ class Register  extends React.Component{
     const {selectedStudent, selectedTeacher, selectedTutor, selectedParent, showNextButton} = this.state;
 
     return (
-      <>
-       <View style={styles.container}>               
+      <>               
           <ScrollView>
+           <View style={styles.container}>
             <Text style={styles.styleText}>I AM A</Text>
             <TouchableOpacity
              style={[selectedStudent ? styles.selectedButton : styles.buttonStyle, {flex: 1, flexDirection: 'row'}]}
@@ -147,9 +147,9 @@ class Register  extends React.Component{
                     containerStyle={{ marginTop: 20 }}
                   />
                 </View>
-            </TouchableOpacity>
+             </TouchableOpacity>
+            </View>
           </ScrollView>
-       </View>
       </>
     );
   }

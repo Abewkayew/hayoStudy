@@ -88,6 +88,14 @@ const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return (
+       <>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="#27597b"
+        />
+        <AppContainer />
+       </>
+      );
   }
 }

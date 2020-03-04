@@ -12,13 +12,14 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import { withNavigation } from 'react-navigation';
 import BottomNavigation from '../home/BottomNavigation';
+import TitleHeader from '../../common/TitleHeader';
 
 const SelectQuestionType = (props) => {
-  const colors = {menuColor: '#fff', profileColor: '#fff', favoriteColor: '#fff'}
+  const colors = {menuColor: '#fff', profileColor: '#fff', favoriteColor: '#fff', notificationColor: '#fff'}
   return (
     <>
+       <TitleHeader title='Ask Question' iconName='arrow-left'/>
        <ScrollView>
-            <Text style={styles.textStyle}>Select Question Type</Text>    
             <View style={styles.container}>
                 <TouchableOpacity  onPress={() => props.navigation.navigate('AskQuestion') }
                 style={styles.styleButtons}>

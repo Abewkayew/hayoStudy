@@ -13,6 +13,15 @@ import SuccessRegistration from '../registration/SuccessRegistration';
 import MoreInfo from '../registration/MoreInfo';
 import ParticipateLive from '../students/winner/ParticipateLive';
 import EditProfile from '../Profile/EditProfile';
+import UserDetail from '../students/Detail/UserDetail'
+import Question from '../students/question/Question';
+import Tutorial from '../students/home/Tutorial';
+import AnswerQuestion from '../students/question/AnswerQuestion';
+import Answer from '../students/Answer/Answer';
+import Header from '../students/home/Header';
+import Notification from '../students/home/notification/Notification';
+import UserTutorial from '../students/home/notification/UserTutorial';
+import Teacher from '../teachers/Home/Teacher';
 
 export const RootStack = createStackNavigator(
    {
@@ -51,6 +60,33 @@ export const RootStack = createStackNavigator(
       },
       EditProfile: {
         screen: EditProfile
+      },
+      UserDetail: {
+        screen: UserDetail
+      },
+      Question: {
+        screen: Question
+      },
+      Tutorial: {
+        screen: Tutorial
+      },
+      AnswerQuestion: {
+        screen: AnswerQuestion
+      },
+      Answer: {
+        screen: Answer
+      },
+      Header: {
+        screen: Header
+      },
+      Notification: {
+        screen: Notification
+      },
+      UserTutorial: {
+        screen: UserTutorial
+      },
+      Teacher: {
+        screen: Teacher
       }
     },
     {

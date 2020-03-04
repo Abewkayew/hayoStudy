@@ -74,7 +74,9 @@ class BlogVideo extends React.Component{
       alert("Exit full screen");
     };
 
-  enterFullScreen = () => {};onFullScreen = () => {
+  enterFullScreen = () => {};
+  
+  onFullScreen = () => {
       if(this.state.screenType=='content')
         this.setState({screenType:'cover'});
     else
@@ -108,6 +110,8 @@ class BlogVideo extends React.Component{
               source={{ uri: videoUrl }} 
               style={styles.mediaPlayer}
               volume={10}
+              playInBackground={false}
+              repeat={true}
             />
           
             <MediaControls

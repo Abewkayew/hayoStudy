@@ -5,64 +5,111 @@ import {
   View,
   Text,
   TouchableOpacity,
-  SafeAreaView,
-  Animated
+  Animated,
+  ActivityIndicator
 } from 'react-native';
 
-import {brandColor} from '../../../utils/Colors/color';
+import {withNavigation} from 'react-navigation';
+import Home from './Home';
+import Question from '../question/Question';
+import BottomNavigation from './BottomNavigation';
+import { ScrollView } from 'react-native-gesture-handler';
+import UserInput from './comment/UserInput';
 
-export default class Header extends React.Component{
-
-  state = {
-    active: 0,
-    xTabOne: 0,
-    xTabTwo: 0,
-    translateX: new Animated.Value(0)
+class Header extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      active: 0,
+      xTabOne: 0,
+      xTabTwo: 0,
+      translateX: new Animated.Value(0)
+    }
   }
 
+
+componentDidMount(){
+  
+}  
+
 handleSlide = type => {
-  let {active, xTabOne, xTabTwo, translateX} = this.state;
+  let {xTabOne, xTabTwo, translateX} = this.state;
+
   Animated.spring(translateX, {
     toValue: type,
-    duration: 100
+    duration: 2000
   }).start();
 
+  setTimeout(() => {
+    if(type === xTabOne){
+        this.setState({
+          active: 0,
+        })
+    } else if(type === xTabTwo){
+       this.setState({
+         active: 1
+       })
+    }
+  }, 500);
   
-
 }
+
+ StartProgressBar = () => {
+   return (
+    <ActivityIndicator size='large' color='#f80'/>
+   )
+ }
 
 
   render(){
-    let {xTabOne, xTabTwo, translateX, active} = this.state;
+    let { active, xTabOne, xTabTwo, translateX} = this.state;
+    const colors = {menuColor: '#f80', profileColor: '#fff', favoriteColor: '#fff', notificationColor: '#fff'}
     return (
-            <SafeAreaView> 
-        <View style={styles.wholeContainer}>
-          <View style={styles.container}>
-             <Animated.View
-               style={[styles.overlay, {transform: [{translateX}]}]}
-             />
-             <TouchableOpacity style={[styles.buttonStyle,{borderRightWidth: 0,
-                      borderTopRightRadius: 0, borderBottomRightRadius: 0}]
-              }
-              onLayout={event => this.setState({
-                xTabOne: event.nativeEvent.layout.x
-              })}
-              onPress={() => this.setState({active: 0}, () => this.handleSlide(xTabOne))}
-              >
-               <Text style={[styles.text, {color: active == 0 ? '#fff' : '#1c396d'}]}>Tutorials</Text>
-             </TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonStyle, {borderLeftWidth: 0,
-                          borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]}
-                  onLayout={event => this.setState({
-                      xTabTwo: event.nativeEvent.layout.x
-                    })}
-                  onPress={() => this.setState({active: 1}, () => this.handleSlide(xTabTwo))}
-                  >
-             <Text style={[styles.text, {color: active == 1 ? '#fff' : '#1c396d'}]}>Questions</Text>
-             </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
+          <>
+            <View style={styles.wholeContainer}>
+                  <View style={styles.container}>
+                    <Animated.View
+                      style={[styles.overlay, {transform: [{translateX}]}]}
+                    />
+                    <TouchableOpacity style={[styles.buttonStyle,{borderRightWidth: 0,
+                              borderTopRightRadius: 0, borderBottomRightRadius: 0}]
+                      }
+                      onLayout={event => this.setState({
+                        xTabOne: event.nativeEvent.layout.x
+                      })}
+                      onPress={() => this.handleSlide(xTabOne)}
+                      >
+                      <Text style={[styles.text, {color: active == 0 ? '#1c396d' : '#808080'}]}>Questions</Text>
+                    </TouchableOpacity>
+                        <TouchableOpacity style={[styles.buttonStyle, {borderLeftWidth: 0,
+                                  borderTopLeftRadius: 0, borderBottomLeftRadius: 0}]}
+                          onLayout={event => this.setState({
+                              xTabTwo: event.nativeEvent.layout.x
+                            })}
+                          onPress={() => this.handleSlide(xTabTwo)}
+                          >
+                    <Text style={[styles.text, {color: active == 1 ? '#1c396d' : '#808080'}]}>Tutorials</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              <ScrollView>
+                <View style={styles.showComponent}>
+                  {
+                    active === 0 && (
+                      <Question/>
+                    )
+                  }
+                  {
+                    active === 1 && (
+                      <Home/>
+                    )
+                  }       
+                </View>
+            </ScrollView>
+            <View style={styles.bottomNav}>
+              <BottomNavigation {...colors}/>
+            </View>
+        </>
     )
   }
 
@@ -72,6 +119,8 @@ const styles = StyleSheet.create({
     text: {
         textAlign: "center",
         fontSize: 20,
+        paddingVertical: 5,
+        fontWeight: '700'
     },
     wholeContainer: {
       width: '99%',
@@ -79,7 +128,7 @@ const styles = StyleSheet.create({
       marginRight: 'auto',
     },
     container: {
-      marginTop: 5,
+      marginTop: 1,
       marginBottom: 10,
       height: 36,
       position: 'relative',
@@ -87,22 +136,26 @@ const styles = StyleSheet.create({
       flexWrap: 'wrap',
       justifyContent: 'space-between',
     },
+    showComponent: {
+      marginBottom: 90,
+    },
+    bottomNav: {
+      marginTop: 10
+    },
     overlay: {
       position: "absolute",
       width: '50%',
       height: '100%',
       top: 0,
       left: 0,
-      backgroundColor: '#27597b', // Sloboda-Studio brand color
-      borderRadius: 4
+      borderBottomColor: '#27597b', // brand color
+      borderBottomWidth: 3,
     },
     buttonStyle: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      borderWidth: 1,
-      borderRadius: 4,
-      borderColor: '#27597b'
     }
 });
 
+export default withNavigation(Header);

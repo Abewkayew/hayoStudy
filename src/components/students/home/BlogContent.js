@@ -25,6 +25,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 import BlogVideo from './BlogVideo';
+import ChooseTopic from '../chooseTopic/ChooseTopic';
+import { newTutorials } from '../../../utils/mock_data/data'
+import NewTutorial from './newTutorial/NewTutorial';
 
 class BlogContent extends React.Component{
   constructor(props){
@@ -39,48 +42,88 @@ class BlogContent extends React.Component{
  
   render(){   
     const {data, loading} = this.state;
+    const showFollow = true;
+
     return (
-      <>
+      <>      
+      <Text style={styles.discover}>Discover new tutorials</Text>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}>
+          
+        {
+          newTutorials.map((tutorial, index) => {
+            return(
+              <NewTutorial tutorial={tutorial}/>
+            )
+          })
+        }
+      </ScrollView>
+      <View 
+        style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10}}>
+        <Text style={styles.viewTutorials}>View all tutorials</Text>
+        <Icon
+          name='arrow-right'
+          type='font-awesome'
+          color='#808080'
+          size={15}
+          onPress={() => {}}
+          containerStyle={{ marginTop: 20 }}
+        />
+      </View>
       {
-        blogContents.map((blog) => {
+        blogContents.map((blog, index) => {
           return(
-              <Card containerStyle={{marginHorizontal: 3, marginVertical: 3, paddingHorizontal: 5}}>
+              <>
+              <Card containerStyle={{marginHorizontal: 3, marginVertical: 5, paddingHorizontal: 5,
+                       backgroundColor: '#f0f0ed', borderColor: '#f0f0ff',
+                       borderWidth: 1, borderRadius: 10, elevation: 2}}
+                key={blog.id}>
                   <>
-                     <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Details')}>
-                        <AuthorRow blog={blog}/>
+                     <AuthorRow content={blog} avatarSize='medium' showFollow={showFollow}/>
+                     <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Details', {
+                        blog: blog
+                      })}>
                         <Title title={blog.title}/>
                       </TouchableNativeFeedback>
                         {
-                           blog.blogVideo ? (
-                              <View style={{width: '100%', height: 200}}>
-                                <BlogVideo videoUrl={blog.blogVideo} thumbnailUrl={blog.thumbnailUrl} title={blog.title}/>
-                                {/* <View style={{marginVertical: 10}}>
-                                  <Icon
-                                      name='download'
-                                      type='font-awesome'
-                                      color='#27597b'
-                                      size={20}
-                                      onPress={() => {}}
-                                      containerStyle={{ marginTop: 20 }}
-                                    />
-                                </View> */}
-                              </View>
-                           ): (
-                            <View>
-                                <Image
-                                  source={{uri: blog.blogImage}}
-                                  style={{height: 150, width: "100%"}}
-                                  PlaceholderContent={<ActivityIndicator />}
-                                  />
-                            </View> 
-                           )                           
+                          //  blog.blogImage ? (
+                          //   <View>
+                          //     <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Details', {
+                          //       blog: blog
+                          //     })}>
+                          //       <Image
+                          //         source={{uri: blog.blogImage}}
+                          //         style={{height: 150, width: "100%"}}
+                          //         PlaceholderContent={<ActivityIndicator />}
+                          //         />
+                          //     </TouchableNativeFeedback>
+                          //   </View>
+                          //  ): (
+                          //    null
+                          //  )                           
                         }
-                     <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Details')}>
+                     <TouchableNativeFeedback onPress={() => this.props.navigation.navigate('Details', {
+                          blog: blog
+                        })}>
                         <Text style={styles.blogText}>{blog.description.charAt(0).toUpperCase() + blog.description.slice(1)}</Text>
-                     </TouchableNativeFeedback>     
-                    <Actions/>
+                        <Text>Read more</Text>                          
+                     </TouchableNativeFeedback>
+                    <Actions {...blog}/>
                   </>
-              </Card>
+              </Card>    
+              {
+                (index === 1) && (
+                  <>
+                    <View style={styles.topics}>
+                      <Text style={styles.discover}>Choose your topic</Text>
+                      <ChooseTopic/>
+                    </View>
+                  </>
+                )
+              }
+             </>       
+
           )
         })
       }
@@ -95,10 +138,41 @@ const styles = StyleSheet.create({
     text: {
         textAlign: "center"
     },
+    discover: {
+      color: '#808080',
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginHorizontal: 10,
+      marginBottom: 5
+    },
+    additionalInfo: {
+      marginLeft: 5,
+    },
     blogText: {
         fontSize:16,
-        paddingVertical: 10,
+        paddingVertical: 3,
         lineHeight: 26
+    },
+    topics: {
+       marginVertical: 10  
+    },
+    newTutorials: {
+      padding: 10,
+      borderColor: '#808080',
+      borderWidth: .6,
+      borderRadius: 10,
+      marginHorizontal: 5,
+    },
+    viewTutorials: {
+      color: '#808080',
+      fontSize: 16,
+      alignSelf: 'center',
+      marginHorizontal: 5      
+    },
+    tutorialTitle: {
+      fontSize: 16,
+      color: '#808080',
+      marginBottom: 5
     }
 });
 

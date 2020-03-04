@@ -36,7 +36,13 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginHorizontal: 15
+      marginHorizontal: 15,
+      marginVertical: 5,
+      borderColor: '#808080',
+      borderWidth: .6,
+      padding: 8,
+      borderRadius: 10,
+      borderStyle: 'dotted'
     },
     text: {
       alignSelf: 'center',

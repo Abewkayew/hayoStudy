@@ -17,12 +17,14 @@ import { withNavigation } from 'react-navigation';
 import BottomNavigation from '../students/home/BottomNavigation';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import TitleHeader from '../common/TitleHeader';
 
 
 const Profile = (props) => {
-  const colors = {menuColor: '#fff', profileColor: '#f80', favoriteColor: '#fff'}
+  const colors = {menuColor: '#fff', profileColor: '#f80', favoriteColor: '#fff', notificationColor: '#fff'}
   return (
     <>
+      <TitleHeader title='Profile' iconName='arrow-left'/>
       <View style={styles.container}>
         <View style={styles.containEdit}>
             <TouchableOpacity onPress={() => props.navigation.navigate('EditProfile') }
@@ -119,8 +121,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexWrap: 'wrap',
-        marginVertical: 15,
-        marginHorizontal: 15,
+        marginHorizontal: 5,
      },
      textStyle: {
        fontSize: 18,
